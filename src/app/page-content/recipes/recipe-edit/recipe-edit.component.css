@@ -1,0 +1,23 @@
+ div.recipe {
+   display: inline;
+ }
+
+ span {
+   display: inline-block;
+   width: 20px;
+   height: 20px;
+ }
+
+ .form-group {
+   display: flex;
+   flex-direction: column;
+ }
+
+ ::ng-deep .mdc-text-field{
+   padding: 0!important;
+ }
+ .button-row{
+   padding-bottom: 10px;
+ }
+
+

@@ -1,0 +1,69 @@
+<div class="row">
+  <ng-container class="col-xs-12">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ng-container>
+        <div class="button-row">
+            <button mat-raised-button	color="primary" [disabled]="!form.valid">Save</button>
+            <button	mat-raised-button color="warn">Cancel</button>
+        </div>
+
+          <div class="row">
+            <label>Name</label>
+            <mat-form-field appearance="fill" class="no-padding">
+              <input matInput
+                   class="form-control"
+                   id="name"
+                   formControlName="name"
+                   >
+          </mat-form-field>
+          </div>
+        <div class="row">
+          <label for="image-path" class="form-label">Image URL</label>
+          <mat-form-field class="no-padding">
+            <input matInput
+                   class="form-control"
+                   id="image-path"
+                   formControlName="imagePath"
+                   #imagePath>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="col-xl-12">
+            <img [src]="imagePath.value" class="img-responsive">
+          </div>
+        </div>
+        <div class="row">
+          <label for="description" class="form-label">Description</label>
+          <mat-form-field class="no-padding">
+            <textarea matInput
+                   id="description"
+                      formControlName="description"
+                   rows="6">
+            </textarea>
+          </mat-form-field>
+        </div>
+
+      </ng-container>
+      <ng-container formArrayName="ingredients">
+        <ng-container *ngFor="let ingredient of ingredients.controls; let i= index">
+          <div fxLayout="row" [formGroup]="ingredient">
+            <mat-form-field appearance="fill">
+              <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field  appearance="fill">
+              <input matInput formControlName="amount">
+            </mat-form-field>
+            <button class="btn btn-default btn-sm" (click)="deleteIngredient(i)">
+                <mat-icon class="delete-btn"> delete_forever</mat-icon>
+            </button>
+
+          </div>
+        </ng-container>
+      </ng-container>
+      <button type="button" mat-mini-fab (click)="addIngredient()">
+        <mat-icon class="add-course-btn">add</mat-icon>
+      </button>
+
+    </form>
+  </ng-container>
+</div>
