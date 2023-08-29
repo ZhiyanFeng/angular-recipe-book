@@ -6,3 +6,13 @@ mat-card {
 mat-form-field {
     display: block;
 }
+
+.btn-group {
+  padding-left: 0.5em;
+}
+
+mat-spinner {
+  max-width: 50px;
+  margin: 2em auto;
+  text-align: center;
+}

@@ -1,0 +1,38 @@
+<div class="spinner">
+
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+</div>
+
+<mat-card *ngIf="!isLoading">
+  <div class="alert alert-danger" *ngIf="error">
+    <mat-error >{{error}}</mat-error>
+  </div>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h2>Log In</h2>
+      <mat-error *ngIf="loginInvalid">
+        The username and password were not recognise
+      </mat-error>
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Email" formControlName="email" required>
+        <mat-error>
+          Please provide a valid email address
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input matInput type="password" placeholder="Password" formControlName="password" required>
+        <mat-error>
+          Please provide a valid password
+        </mat-error>
+      </mat-form-field>
+      <div class="btn-group">
+        <button mat-raised-button color="primary"
+        [disabled]="!form.valid" type="submit">{{ isLoginMode ? 'Login' : 'Sign Up'}}</button>
+      </div>
+      <div class="btn-group">
+        <button mat-raised-button color="primary" type="button" (click)="onSwitchMode()">Switch
+          to {{isLoginMode ? 'Sign up' : 'Login'}}</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

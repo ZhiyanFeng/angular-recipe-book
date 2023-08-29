@@ -23,9 +23,12 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {NgOptimizedImage} from "@angular/common";
 import {RecipeService} from "./services/recipe.service";
-import {HttpClientModule} from "@angular/common/http";
-import { AuthComponent } from './auth/auth/auth.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { AuthComponent } from './auth/auth.component';
 import {MatCardModule} from "@angular/material/card";
+import {NgCircleProgressModule} from "ng-circle-progress";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {AuthInterceptor} from "./auth/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -43,21 +46,35 @@ import {MatCardModule} from "@angular/material/card";
     RecipeEditComponent,
     AuthComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        NgOptimizedImage,
-        HttpClientModule,
-        FormsModule,
-        MatCardModule
-    ],
-  providers: [ShoppingListService,RecipeService],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    NgOptimizedImage,
+    HttpClientModule,
+    FormsModule,
+    MatCardModule,
+    NgCircleProgressModule.forRoot({
+      radius: 100,
+      outerStrokeWidth: 16,
+      innerStrokeWidth: 8,
+      outerStrokeColor: "#78C000",
+      innerStrokeColor: "#C7E596",
+      animationDuration: 300,
+    }),
+    MatProgressSpinnerModule
+  ],
+  providers: [
+    ShoppingListService,
+    RecipeService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

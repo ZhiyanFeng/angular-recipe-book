@@ -6,7 +6,7 @@ import {RecipeStartComponent} from "./page-content/recipes/recipe-start/recipe-s
 import {RecipeDetailComponent} from "./page-content/recipes/recipe-detail/recipe-detail.component";
 import {RecipeEditComponent} from "./page-content/recipes/recipe-edit/recipe-edit.component";
 import {recipesResolver} from "./services/recipes.resolver";
-import {AuthComponent} from "./auth/auth/auth.component";
+import {AuthComponent} from "./auth/auth.component";
 
 
 const routes: Routes = [

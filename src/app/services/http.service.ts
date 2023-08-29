@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Recipe} from "../page-content/recipes/recipe.model";
 import {RecipeService} from "./recipe.service";
 import {environment} from "../../environments/environment";
-import {map, tap} from "rxjs";
+import {exhaustMap, map, take, tap} from "rxjs";
+import {AuthService} from "../auth/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  constructor(private http: HttpClient, private recipeService: RecipeService) {
+  constructor(private http: HttpClient, private recipeService: RecipeService, private authService: AuthService) {
   }
 
   saveRecipes(){
@@ -20,18 +21,19 @@ export class HttpService {
     });
   }
   fetchRecipes(){
-    return this.http.get<Recipe[]>(environment.recipesUrl).pipe(
-        map(recipes=>{
-          return recipes.map(recipe=>{
-            return {
-              ...recipe,
-              ingredients: recipe.ingredients ? recipe.ingredients : []
-            }
+        return this.http.get<Recipe[]>(environment.recipesUrl).pipe(
+          map(recipes=>{
+            return recipes.map(recipe=>{
+              return {
+                ...recipe,
+                ingredients: recipe.ingredients ? recipe.ingredients : []
+              }
+            })
+          }),
+          tap((recipes)=>{
+            this.recipeService.initRecipes(recipes);
           })
-        }),
-        tap((recipes)=>{
-          this.recipeService.initRecipes(recipes);
-        })
-    )
+        )
+
   }
 }
